@@ -5,9 +5,13 @@ extends EditorScenePostImport
 var material = preload("res://textures/Farming_Color_Palette_Mat.tres")
 
 func _post_import(scene):
-	for child in scene.get_children():
+	_iterate(scene)
+	return scene # Remember to return the imported scene
+
+func _iterate(node: Node):
+	for child in node.get_children():
 		if child is MeshInstance3D:
 			child.material_override = material
 			child.mesh.surface_set_material(0, material)
-	return scene # Remember to return the imported scene
-
+		if child.get_child_count() > 0:
+			_iterate(child)
