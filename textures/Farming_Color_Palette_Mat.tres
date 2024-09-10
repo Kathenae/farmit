@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cvni02i1uyo3l"]
+
+[ext_resource type="Texture2D" uid="uid://cpq8un5hirb07" path="res://textures/Farming_Color_Palette_01.png" id="1_4u0m4"]
+
+[resource]
+albedo_texture = ExtResource("1_4u0m4")

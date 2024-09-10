@@ -1,0 +1,95 @@
+[gd_scene load_steps=21 format=3 uid="uid://b5wblujbt1g0d"]
+
+[ext_resource type="Script" path="res://scripts/farm_controller.gd" id="1_1jxww"]
+[ext_resource type="Script" path="res://scripts/orbit_camera.gd" id="1_lckgj"]
+[ext_resource type="Script" path="res://scripts/core/crop.gd" id="2_8wix8"]
+[ext_resource type="Texture2D" uid="uid://bcr3c4ni5yewt" path="res://textures/square.png" id="2_athqd"]
+[ext_resource type="ArrayMesh" uid="uid://cc7e4mhakwuu2" path="res://meshes/crop_steps/Farm_Crop_Carrot_Step_012.tres" id="3_r13v1"]
+[ext_resource type="ArrayMesh" uid="uid://cf8jvkgh0bnsg" path="res://meshes/crop_steps/Farm_Crop_Carrot_Step_022.tres" id="4_1n0ee"]
+[ext_resource type="ArrayMesh" uid="uid://c2d28i3uywwrq" path="res://meshes/crop_steps/Farm_Crop_Carrot_Step_032.tres" id="5_657q4"]
+[ext_resource type="ArrayMesh" uid="uid://mlwvnwk5gf3e" path="res://meshes/crop_steps/Farm_Crop_Tomato_Step_012.tres" id="6_uf61t"]
+[ext_resource type="ArrayMesh" uid="uid://ptokrjtgxebm" path="res://meshes/crop_steps/Farm_Crop_Tomato_Step_022.tres" id="7_1h8eu"]
+[ext_resource type="ArrayMesh" uid="uid://dtnau1xl6v8q8" path="res://meshes/crop_steps/Farm_Crop_Tomato_Step_032.tres" id="8_vf7en"]
+[ext_resource type="ArrayMesh" uid="uid://cx8ptahqjfcds" path="res://meshes/crop_steps/Farm_Crop_Corn_Step_012.tres" id="10_lfkty"]
+[ext_resource type="ArrayMesh" uid="uid://cpqkoofyu3nq1" path="res://meshes/crop_steps/Farm_Crop_Corn_Step_022.tres" id="11_xg3ju"]
+[ext_resource type="ArrayMesh" uid="uid://cbd83ga6q5ml1" path="res://meshes/crop_steps/Farm_Crop_Corn_Step_032.tres" id="12_s2hdd"]
+
+[sub_resource type="Resource" id="Resource_nubb4"]
+script = ExtResource("2_8wix8")
+name = "Carrot"
+description = "Its a carrot"
+minutes_to_grow = 1.0
+steps = Array[Mesh]([ExtResource("3_r13v1"), ExtResource("4_1n0ee"), ExtResource("5_657q4")])
+
+[sub_resource type="Resource" id="Resource_uijlb"]
+script = ExtResource("2_8wix8")
+name = "Tomato"
+description = "Its a tomato"
+minutes_to_grow = 0.5
+steps = Array[Mesh]([ExtResource("6_uf61t"), ExtResource("7_1h8eu"), ExtResource("8_vf7en")])
+
+[sub_resource type="Resource" id="Resource_vt3va"]
+script = ExtResource("2_8wix8")
+name = "Corn"
+description = "Its Cord, make some popcorn"
+minutes_to_grow = 1.0
+steps = Array[Mesh]([ExtResource("10_lfkty"), ExtResource("11_xg3ju"), ExtResource("12_s2hdd")])
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_m0gb7"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_m6ikw"]
+sky_material = SubResource("ProceduralSkyMaterial_m0gb7")
+
+[sub_resource type="Environment" id="Environment_6dvhc"]
+background_mode = 2
+sky = SubResource("Sky_m6ikw")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l4jtb"]
+albedo_color = Color(0.449149, 1, 0.29832, 1)
+
+[node name="Game" type="Node3D"]
+
+[node name="OrbitCamera" type="Camera3D" parent="."]
+projection = 1
+size = 40.0
+script = ExtResource("1_lckgj")
+disable_orbit_elevation = true
+orbit_sensitivity = 25
+zoom_sensitivity = 5
+pan_sensitivity = 5
+elevation = 45
+azimuth = 45
+
+[node name="FarmController" type="Node3D" parent="."]
+script = ExtResource("1_1jxww")
+crops = Array[ExtResource("2_8wix8")]([SubResource("Resource_nubb4"), SubResource("Resource_uijlb"), SubResource("Resource_vt3va")])
+
+[node name="selection" type="Sprite3D" parent="FarmController"]
+pixel_size = 0.06
+axis = 1
+no_depth_test = true
+texture_filter = 2
+texture = ExtResource("2_athqd")
+
+[node name="tick" type="Timer" parent="FarmController"]
+wait_time = 0.5
+autostart = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6dvhc")
+
+[node name="Ground" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+material_override = SubResource("StandardMaterial3D_l4jtb")
+use_collision = true
+size = Vector3(2500, 1, 2500)
+
+[connection signal="timeout" from="FarmController/tick" to="FarmController" method="_on_tick_timeout"]

@@ -1,0 +1,38 @@
+# To do list
+
+- [X] Basic Camera movement
+- [ ] Basic Farming Mechanics
+	- [X] Implement Plowing
+		- [X] Flattening 
+	- [X] Implement Planting
+		- [X] Uprooting
+	- [X] Implement Growing 
+	- [ ] Implement Harvesting to fake inventory
+- [ ] Implement Farm plots
+	- [ ] Restrict actions to owned plot
+	- [ ] Expanding farm plot
+- [ ] Crop Needs
+	- [ ] Thirst - Prevents Death and Allows Growth
+	- [ ] Fertilization - Increases Quality
+	- [ ] Neighborings - Increases Quality or Speeds Growth
+- [ ] Day/night cycle and advance day
+- [ ] Implement Save system
+- [ ] Economy
+	- [ ] Require money to expand plot
+	- [ ] Shops (to Buy seeds, fertilizers, tools, machines, etc)
+	- [ ] Marktplace (Sell crops and manufactored products)
+- [ ] Implement Automation
+	- [ ] Sprinklers
+	- [ ] Seeders
+	- [ ] Planters
+	- [ ] Harversters
+	- [ ] Silos
+	- [ ] Machine Signals
+- [ ] Questing
+	- [ ] Deliveries (deliver x  crops before given date)
+	- [ ] Achiements (plant your first x, unlock y, plant x number of y plants)
+- [ ] World Generation
+	- Terrain
+	- Trees
+	- Rocks
+	- Bushes
